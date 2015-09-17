@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  UIViewMoveForKeyboardComplete
+//  MoveViewForKeyboard
 //
 //  Created by Lawrence F MacFadyen on 2015-09-17.
 //  Copyright © 2015 LawrenceM. All rights reserved.
@@ -19,6 +19,12 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
+    }
+
 
 
 }
