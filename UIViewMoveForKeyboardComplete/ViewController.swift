@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     
     var keyboardHeight: CGFloat!
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -36,13 +37,12 @@ class ViewController: UIViewController {
             if let keyboardSize =  (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
                 keyboardHeight = keyboardSize.height
 
-                
             }
         }
     }
 
     func keyboardWillHide(notification: NSNotification) {
-        
+
     }
 
 
