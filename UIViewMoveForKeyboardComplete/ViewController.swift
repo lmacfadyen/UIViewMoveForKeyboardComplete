@@ -10,16 +10,26 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var keyboardHeight: CGFloat!
 
+    @IBOutlet weak var bottomHeight: NSLayoutConstraint!
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
-
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,17 +45,18 @@ class ViewController: UIViewController {
     func keyboardWillShow(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             if let keyboardSize =  (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-                keyboardHeight = keyboardSize.height
-
+                bottomHeight.constant = keyboardSize.height
+                view.setNeedsLayout()
+                
             }
         }
     }
 
-    func keyboardWillHide(notification: NSNotification) {
-
+    func keyboardWillHide(notification: NSNotification){
+        bottomHeight.constant = 0.0
+        view.setNeedsLayout()
+        
     }
-
-
 
 }
 
