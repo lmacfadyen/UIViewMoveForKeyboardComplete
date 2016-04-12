@@ -45,15 +45,12 @@ class ViewController: UIViewController {
         if let userInfo = notification.userInfo {
             if let keyboardSize =  (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
                 bottomHeight.constant = keyboardSize.height
-                view.setNeedsLayout()
             }
         }
     }
 
     func keyboardWillHide(notification: NSNotification){
         bottomHeight.constant = 0.0
-        view.setNeedsLayout()
-        
     }
 
 }
