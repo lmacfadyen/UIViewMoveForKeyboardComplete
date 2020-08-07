@@ -23,8 +23,8 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
@@ -42,20 +42,20 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func adjustForKeyboard(notification: Notification) {
+    @objc func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
         
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         
-        if notification.name == Notification.Name.UIKeyboardWillHide {
+        if notification.name == UIResponder.keyboardWillHideNotification {
             bottomHeight.constant = 0.0
         } else {
             bottomHeight.constant = keyboardViewEndFrame.height
         }
     }
     
-    func dismissKeyboard(){
+    @objc func dismissKeyboard(){
         view.endEditing(true)
     }
 
